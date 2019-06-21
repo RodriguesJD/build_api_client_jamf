@@ -1,0 +1,7 @@
+# Created by .ignore support plugin (hsz.mobi)
+venv
+chromedriver
+Classic API Resource Documentation.html
+build_jamf_core/config.py
+core/get_jamf
+Classic API Resource Documentation_files
