@@ -42,3 +42,6 @@ def clean_up_test_site():
 clean_up = input("Clean up. Y for yes, any other key mean no\n")
 if clean_up.lower() == "y":
     clean_up_test_site()
+
+# TODO move project over to jamf-api-client for commiting changes
+
