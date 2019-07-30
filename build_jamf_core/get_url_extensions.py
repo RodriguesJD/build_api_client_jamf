@@ -1,7 +1,12 @@
 import time
 from selenium import webdriver
 from bs4 import BeautifulSoup
-from build_jamf_core.config import base_url, path_to_chrome_driver
+import os
+
+
+jamf_prod_url = os.environ["JAMF_URL_PROD"]
+
+path_to_chrome_driver = os.environ["CHROME_DRIVER"]
 
 
 
@@ -13,7 +18,8 @@ class GetUrlExtensions:
     browser = webdriver.Chrome(path_to_chrome_driver)
     usable_extensions = []
 
-    url = base_url
+    url = jamf_prod_url
+
 
     def get_page(self):
         """
