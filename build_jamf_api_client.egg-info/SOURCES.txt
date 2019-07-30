@@ -1,8 +1,0 @@
-README.rst
-build_jamf_api_client.py
-setup.py
-build_jamf_api_client.egg-info/PKG-INFO
-build_jamf_api_client.egg-info/SOURCES.txt
-build_jamf_api_client.egg-info/dependency_links.txt
-build_jamf_api_client.egg-info/requires.txt
-build_jamf_api_client.egg-info/top_level.txt
