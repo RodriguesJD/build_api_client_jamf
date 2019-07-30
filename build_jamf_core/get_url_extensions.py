@@ -5,9 +5,7 @@ import os
 
 
 jamf_prod_url = os.environ["JAMF_URL_PROD"]
-print(jamf_prod_url)
 path_to_chrome_driver = os.environ["CHROME_DRIVER"]
-print(path_to_chrome_driver)
 
 class GetUrlExtensions:
     """
