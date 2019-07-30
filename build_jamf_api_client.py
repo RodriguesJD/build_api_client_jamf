@@ -11,6 +11,7 @@ from build_jamf_core.human_assited_corrections import HumanCorrections
 CreateProjectStructure().main()
 
 for url_list in GetUrlExtensions().main():
+    # print(url_list)
     CreateClassAttributes(url_list).main()
 
 # TODO now you need a script that cleans up the ones i cant account for.

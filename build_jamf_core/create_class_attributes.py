@@ -1,6 +1,7 @@
 from pathlib import Path
 import logging
 
+
 class CreateClassAttributes:
     """
     Create python text files
@@ -122,7 +123,6 @@ class CreateClassAttributes:
 
     def main(self):
         urls = self.url_index
-
         url_extension = urls[0][0]
         if "{" in url_extension:
             self.class_text = self.no_text_base(url_extension=url_extension)
