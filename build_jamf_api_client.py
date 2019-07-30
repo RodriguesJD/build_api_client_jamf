@@ -7,15 +7,16 @@ from build_jamf_core.create_project_structure import CreateProjectStructure
 from build_jamf_core.get_url_extensions import GetUrlExtensions
 from build_jamf_core.create_class_attributes import CreateClassAttributes
 from build_jamf_core.human_assited_corrections import HumanCorrections
+from build_jamf_core.create_test_classes import CreateTestClasses
 
 CreateProjectStructure().main()
 
 for url_list in GetUrlExtensions().main():
-    # print(url_list)
     CreateClassAttributes(url_list).main()
+    CreateTestClasses(url_list[0][0]).main()
 
 # TODO now you need a script that cleans up the ones i cant account for.
-HumanCorrections().main()
+# HumanCorrections().main()
 
 
 def clean_up_test_site():

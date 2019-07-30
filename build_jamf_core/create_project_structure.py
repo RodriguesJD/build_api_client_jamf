@@ -8,9 +8,9 @@ class CreateProjectStructure:
     """
     base_dir = "core"
     tests_dir = f"{base_dir}/tests/"
+    test_get_dir = f"{base_dir}/tests/get_jamf/"
     get_dir = f"{base_dir}/get_jamf/"
     get_file = f"{get_dir}/get_jamf.py"
-    config_file = f"{base_dir}/config.py"
     init_file = "__init__.py"
 
     def create_base_dir(self):
@@ -27,6 +27,12 @@ class CreateProjectStructure:
         if not os.path.isdir(Path(self.get_dir)):
             os.mkdir(Path(self.get_dir))
             open(Path(f"{self.get_dir}/{self.init_file}"), 'a').close()
+
+    def create_test_get_dir(self):
+        if not os.path.isdir(Path(self.test_get_dir)):
+            os.mkdir(Path(self.test_get_dir))
+            open(Path(f"{self.test_get_dir}/{self.init_file}"), 'a').close()
+
 
     def create_get_file(self):
         self_url_fixer = "{self.url}"
@@ -50,17 +56,11 @@ class GetJamf:
             with open(Path(self.get_file), "w") as writefile:
                 writefile.write(text_file)
 
-    def create_config_file(self):
-        text_file = "base_url = None"
-        if not os.path.isfile(self.config_file):
-            with open(Path(self.config_file), "w") as writefile:
-                writefile.write(text_file)
-
     def main(self):
         self.create_base_dir()
         self.create_tests_dir()
         self.create_get_dir()
+        self.create_test_get_dir()
         self.create_get_file()
-        self.create_config_file()
 
 
