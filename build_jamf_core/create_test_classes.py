@@ -12,5 +12,7 @@ class CreateTestClasses:
 
     def main(self):
         self.write_python_page(f"# TODO create test class for {self.url_index[0][0]}")
+        print('\n')
+        print(self.url_index)
 
 

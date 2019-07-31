@@ -19,7 +19,7 @@ class CreateProjectStructure:
             os.mkdir(Path(self.base_dir))
             open(Path(f"{self.base_dir}/{self.init_file}"), 'a').close()
         else:
-            print(f"{self.base_dir} exists``.")
+            print(f"{self.base_dir} exists.")
 
     def create_tests_dir(self):
         if not os.path.isdir(Path(self.tests_dir)):
@@ -27,7 +27,7 @@ class CreateProjectStructure:
             os.mkdir(Path(self.tests_dir))
             open(Path(f"{self.tests_dir}/{self.init_file}"), 'a').close()
         else:
-            print(f"{self.tests_dir} exists``.")
+            print(f"{self.tests_dir} exists.")
 
     def create_get_dir(self):
         if not os.path.isdir(Path(self.get_dir)):
@@ -35,7 +35,7 @@ class CreateProjectStructure:
             os.mkdir(Path(self.get_dir))
             open(Path(f"{self.get_dir}/{self.init_file}"), 'a').close()
         else:
-            print(f"{self.get_dir} exists``.")
+            print(f"{self.get_dir} exists.")
 
     def create_test_get_dir(self):
         if not os.path.isdir(Path(self.test_get_dir)):
@@ -43,7 +43,7 @@ class CreateProjectStructure:
             os.mkdir(Path(self.test_get_dir))
             open(Path(f"{self.test_get_dir}/{self.init_file}"), 'a').close()
         else:
-            print(f"{self.create_tests_dir()} exists``.")
+            print(f"{self.create_tests_dir()} exists.")
 
     def create_get_file(self):
         print(f"Create {self.get_file} file")
@@ -68,7 +68,7 @@ class GetJamf:
             with open(Path(self.get_file), "w") as writefile:
                 writefile.write(text_file)
         else:
-            print(f"{self.get_file} exists``.")
+            print(f"{self.get_file} exists.")
 
     def main(self):
         self.create_base_dir()
