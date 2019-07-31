@@ -15,8 +15,11 @@ class CreateProjectStructure:
 
     def create_base_dir(self):
         if not os.path.isdir(Path(self.base_dir)):
+            print(f"Create {self.base_dir} directory")
             os.mkdir(Path(self.base_dir))
             open(Path(f"{self.base_dir}/{self.init_file}"), 'a').close()
+        else:
+            print(f"{self.base_dir} exists``.")
 
     def create_tests_dir(self):
         if not os.path.isdir(Path(self.tests_dir)):
@@ -57,7 +60,6 @@ class GetJamf:
                 writefile.write(text_file)
 
     def main(self):
-        print()
         self.create_base_dir()
         self.create_tests_dir()
         self.create_get_dir()
