@@ -76,5 +76,6 @@ class GetJamf:
         self.create_get_dir()
         self.create_test_get_dir()
         self.create_get_file()
+        print("\n")
 
 
