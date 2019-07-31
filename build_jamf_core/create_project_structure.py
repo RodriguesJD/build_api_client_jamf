@@ -23,13 +23,19 @@ class CreateProjectStructure:
 
     def create_tests_dir(self):
         if not os.path.isdir(Path(self.tests_dir)):
+            print(f"Create {self.tests_dir} directory")
             os.mkdir(Path(self.tests_dir))
             open(Path(f"{self.tests_dir}/{self.init_file}"), 'a').close()
+        else:
+            print(f"{self.tests_dir} exists``.")
 
     def create_get_dir(self):
         if not os.path.isdir(Path(self.get_dir)):
+            print(f"Create {self.get_dir} directory")
             os.mkdir(Path(self.get_dir))
             open(Path(f"{self.get_dir}/{self.init_file}"), 'a').close()
+        else:
+            print(f"{self.get_dir} exists``.")
 
     def create_test_get_dir(self):
         if not os.path.isdir(Path(self.test_get_dir)):
