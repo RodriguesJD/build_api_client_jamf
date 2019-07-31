@@ -10,7 +10,7 @@ class CreateProjectStructure:
     tests_dir = f"{base_dir}/tests/"
     test_get_dir = f"{base_dir}/tests/get_jamf/"
     get_dir = f"{base_dir}/get_jamf/"
-    get_file = f"{get_dir}/get_jamf.py"
+    get_file = f"{get_dir}get_jamf.py"
     init_file = "__init__.py"
 
     def create_base_dir(self):
@@ -46,6 +46,7 @@ class CreateProjectStructure:
             print(f"{self.create_tests_dir()} exists``.")
 
     def create_get_file(self):
+        print(f"Create {self.get_file} file")
         self_url_fixer = "{self.url}"
         base_url_fixer = "{config.base_url}"
         accept_fixer = "{'Accept': 'application/json'}"
@@ -66,6 +67,8 @@ class GetJamf:
         if not os.path.isfile(self.get_file):
             with open(Path(self.get_file), "w") as writefile:
                 writefile.write(text_file)
+        else:
+            print(f"{self.get_file} exists``.")
 
     def main(self):
         self.create_base_dir()
