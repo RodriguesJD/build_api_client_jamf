@@ -1,1 +1,0 @@
-# TODO create test class for /fileuploads/{resource}/{idType}/{id}

@@ -4,7 +4,7 @@ from bs4 import BeautifulSoup
 import os
 
 
-jamf_prod_url = os.environ["JAMF_URL_PROD"]
+jamf_prod_url = os.environ["JAMF_API_URL"]
 path_to_chrome_driver = os.environ["CHROME_DRIVER"]
 
 class GetUrlExtensions:
@@ -71,7 +71,6 @@ class GetUrlExtensions:
 
     def main(self):
         self.get_page()  # open the webpage object
-
         self.get_all_url_extensions()  # Create class list for all url extension
         self.browser.close()  # The browser object is no longer needed
         return self.sorted_urls()

@@ -48,13 +48,15 @@ class CreateProjectStructure:
     def create_get_file(self):
         print(f"Create {self.get_file} file")
         self_url_fixer = "{self.url}"
-        base_url_fixer = "{config.base_url}"
+        base_url_fixer = "{base_url}"
         accept_fixer = "{'Accept': 'application/json'}"
         text_file = f"""from requests.auth import HTTPBasicAuth
 import requests
+import os
 
-from core.secret.key import key, username
-from core import config
+base_url = os.environ["JAMF_URL_PROD"]
+key = os.environ["JAMF_KEY"]
+username = os.environ["JAMF_USERNAME"]
 
 
 class GetJamf:

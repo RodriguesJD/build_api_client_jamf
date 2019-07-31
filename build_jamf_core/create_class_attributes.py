@@ -14,19 +14,6 @@ class CreateClassAttributes:
         self.url_index = url_index
 
     def text_base(self, url_extension):
-        """
-        Each url_extension that gets a 200 response will be used as an object that gets passed to the GetJamf class.
-        This function creates the class syntax for each url_extension.
-
-        Parameters
-        ----------
-        url_extension
-
-        Returns
-        -------
-            text
-                str
-        """
         self.file_name = url_extension.replace('/', '')
         text = f"from core.get_jamf.get_jamf import GetJamf\n\n\n" \
             f"class {url_extension.replace('/', '').capitalize()}(GetJamf):\n\n" \
@@ -34,7 +21,7 @@ class CreateClassAttributes:
 
         return text
 
-    def no_text_base(self, url_extension):
+    def text_base_with_search_only_url(self, url_extension):
         url = url_extension.split("/")[1]
         self.file_name = url
         text = f"from core.get_jamf.get_jamf import GetJamf\n\n\n" \
@@ -79,9 +66,7 @@ class CreateClassAttributes:
                 ext_url = "/subset/basic"  # TODO fix this its super hacky no logic just works cause theres only one
             else:
                 for text in split_url:
-                    if loop_count == 0:
-                        loop_count += 1
-                    elif loop_count == 1:
+                    if loop_count <= 1:
                         loop_count += 1  # skipping the base url
                     elif loop_count == 2:
                         ext_url = f'/{text}'
@@ -125,7 +110,7 @@ class CreateClassAttributes:
         urls = self.url_index
         url_extension = urls[0][0]
         if "{" in url_extension:
-            self.class_text = self.no_text_base(url_extension=url_extension)
+            self.class_text = self.text_base_with_search_only_url(url_extension=url_extension)
         else:
             self.class_text = self.text_base(url_extension=url_extension)
 
@@ -134,6 +119,7 @@ class CreateClassAttributes:
                 if "{" in url_data[0]:  # this handles url structure that doesnt have a base url
                     self.attr_logic(url_data)
                 else:
+                    # TODO i think we can use this to create a Computers().name_id_list()
                     pass
             else:
                 self.attr_logic(url_data)

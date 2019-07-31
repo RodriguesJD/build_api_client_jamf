@@ -1,1 +1,6 @@
-# TODO create test class for /jssuser
+from core.get_jamf.jssuser import Jssuser
+
+
+def test_jssuser():
+    assert Jssuser.status_code == 200
+
