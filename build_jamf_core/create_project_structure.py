@@ -57,6 +57,7 @@ class GetJamf:
                 writefile.write(text_file)
 
     def main(self):
+        print()
         self.create_base_dir()
         self.create_tests_dir()
         self.create_get_dir()

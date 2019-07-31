@@ -13,35 +13,14 @@ CreateProjectStructure().main()
 
 for url_list in GetUrlExtensions().main():
     CreateClassAttributes(url_list).main()
-    CreateTestClasses(url_list[0][0]).main()
+    CreateTestClasses(url_list).main()
 
 # TODO now you need a script that cleans up the ones i cant account for.
-# HumanCorrections().main()
-
-
-def clean_up_test_site():
-    core_dir = os.listdir('core/')
-    for item in core_dir:
-        if "__" in item:
-            pass
-        elif item == "secret":
-            pass
-        elif item == "build_jamf_client":
-            pass
-        elif item == "config.py":
-            pass
-        elif item == "tests":
-            shutil.rmtree(f"core/{item}")
-        else:
-            if os.path.isfile(f"core/{item}"):
-                os.remove(f"core/{item}")
-            else:
-                shutil.rmtree(f"core/{item}")
-
+HumanCorrections().main()
 
 clean_up = input("Clean up. Y for yes, any other key mean no\n")
 if clean_up.lower() == "y":
-    clean_up_test_site()
+    shutil.rmtree(Path(f"core/"))
 
 # TODO move project over to jamf-api-client for commiting changes
 
