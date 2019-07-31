@@ -39,9 +39,11 @@ class CreateProjectStructure:
 
     def create_test_get_dir(self):
         if not os.path.isdir(Path(self.test_get_dir)):
+            print(f"Create {self.test_get_dir} directory")
             os.mkdir(Path(self.test_get_dir))
             open(Path(f"{self.test_get_dir}/{self.init_file}"), 'a').close()
-
+        else:
+            print(f"{self.create_tests_dir()} exists``.")
 
     def create_get_file(self):
         self_url_fixer = "{self.url}"
