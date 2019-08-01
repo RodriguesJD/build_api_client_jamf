@@ -5,18 +5,20 @@ import shutil
 
 from build_jamf_core.create_project_structure import CreateProjectStructure
 from build_jamf_core.get_url_extensions import GetUrlExtensions
-from build_jamf_core.create_class_attributes import CreateClassAttributes
+# from build_jamf_core.create_class import CreateClass
 from build_jamf_core.human_assited_corrections import HumanCorrections
 from build_jamf_core.create_test_classes import CreateTestClasses
+from build_jamf_core.dev_create_class import CreateClass
 
 CreateProjectStructure().main()
 
-for url_list in GetUrlExtensions().main():
-    CreateClassAttributes(url_list).main()
-    CreateTestClasses(url_list).main()
-
-# TODO now you need a script that cleans up the ones i cant account for.
-HumanCorrections().main()
+for url_extension in GetUrlExtensions().main():
+    print("URL EXTENSION SET")
+    CreateClass(url_extension).main()
+#     CreateTestClasses(url_list).main()
+#
+# # TODO now you need a script that cleans up the ones i cant account for.
+# HumanCorrections().main()
 
 clean_up = input("Clean up. Y for yes, any other key mean no\n")
 if clean_up.lower() == "y":

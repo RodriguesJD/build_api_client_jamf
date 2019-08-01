@@ -1,8 +1,9 @@
 from pathlib import Path
 import logging
+from build_jamf_core.create_methods_for_class import MethodLogic
 
 
-class CreateClassAttributes:
+class CreateClass:
     """
     Create python text files
     """
@@ -26,7 +27,6 @@ class CreateClassAttributes:
         self.file_name = url
         text = f"from core.get_jamf.get_jamf import GetJamf\n\n\n" \
             f"class {url.capitalize()}(GetJamf):\n\n" \
-            f"    # TODO block this object from being used without using a search func.\n\n" \
             f"    url = '/{url}'\n\n"
 
         return text
@@ -107,22 +107,27 @@ class CreateClassAttributes:
             writefile.write(class_text)
 
     def main(self):
-        urls = self.url_index
-        url_extension = urls[0][0]
-        if "{" in url_extension:
-            self.class_text = self.text_base_with_search_only_url(url_extension=url_extension)
+        urls = self.url_index  # set of url exenstions per rest api FEATURE
+        url_extension_base = urls[0][0]
+        if "{" in url_extension_base:  # if { is in the url_extension_base its a search only url
+            self.class_text = self.text_base_with_search_only_url(url_extension=url_extension_base)
         else:
-            self.class_text = self.text_base(url_extension=url_extension)
+            self.class_text = self.text_base(url_extension=url_extension_base)
 
         for url_data in urls:
-            if url_data[0] == url_extension:
-                if "{" in url_data[0]:  # this handles url structure that doesnt have a base url
-                    self.attr_logic(url_data)
-                else:
-                    # TODO i think we can use this to create a Computers().name_id_list()
-                    pass
-            else:
-                self.attr_logic(url_data)
+            url = url_data[0]
+            rest_type = url_data[1]
+            MethodLogic(url, rest_type).main()
+
+
+            # if url_data[0] == url_extension_base:
+            #     if "{" in url_data[0]:  # this handles url structure that doesnt have a base url
+            #         self.attr_logic(url_data)
+            #     else:
+            #         # TODO i think we can use this to create a Computers().name_id_list()
+            #         pass
+            # else:
+            #     self.attr_logic(url_data)
 
         self.write_python_page(self.class_text)
 

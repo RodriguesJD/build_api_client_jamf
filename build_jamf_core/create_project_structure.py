@@ -15,38 +15,41 @@ class CreateProjectStructure:
 
     def create_base_dir(self):
         if not os.path.isdir(Path(self.base_dir)):
-            print(f"Create {self.base_dir} directory")
+            # print(f"Create {self.base_dir} directory")
             os.mkdir(Path(self.base_dir))
             open(Path(f"{self.base_dir}/{self.init_file}"), 'a').close()
         else:
-            print(f"{self.base_dir} exists.")
+            # print(f"{self.base_dir} exists.")
+            pass
 
     def create_tests_dir(self):
         if not os.path.isdir(Path(self.tests_dir)):
-            print(f"Create {self.tests_dir} directory")
+            # print(f"Create {self.tests_dir} directory")
             os.mkdir(Path(self.tests_dir))
             open(Path(f"{self.tests_dir}/{self.init_file}"), 'a').close()
         else:
-            print(f"{self.tests_dir} exists.")
+            # print(f"{self.tests_dir} exists.")
+            pass
 
     def create_get_dir(self):
         if not os.path.isdir(Path(self.get_dir)):
-            print(f"Create {self.get_dir} directory")
+            # print(f"Create {self.get_dir} directory")
             os.mkdir(Path(self.get_dir))
             open(Path(f"{self.get_dir}/{self.init_file}"), 'a').close()
         else:
-            print(f"{self.get_dir} exists.")
+            # print(f"{self.get_dir} exists.")
+            pass
 
     def create_test_get_dir(self):
         if not os.path.isdir(Path(self.test_get_dir)):
-            print(f"Create {self.test_get_dir} directory")
+            # print(f"Create {self.test_get_dir} directory")
             os.mkdir(Path(self.test_get_dir))
             open(Path(f"{self.test_get_dir}/{self.init_file}"), 'a').close()
         else:
-            print(f"{self.create_tests_dir()} exists.")
-
+            # print(f"{self.create_tests_dir()} exists.")
+            pass
     def create_get_file(self):
-        print(f"Create {self.get_file} file")
+        # print(f"Create {self.get_file} file")
         self_url_fixer = "{self.url}"
         base_url_fixer = "{base_url}"
         accept_fixer = "{'Accept': 'application/json'}"
