@@ -13,7 +13,7 @@ from build_jamf_core.dev_create_class import CreateClass
 CreateProjectStructure().main()
 
 for url_extension in GetUrlExtensions().main():
-    print("URL EXTENSION SET")
+    # print("URL EXTENSION SET")
     CreateClass(url_extension).main()
 #     CreateTestClasses(url_list).main()
 #

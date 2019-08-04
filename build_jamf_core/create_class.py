@@ -1,6 +1,6 @@
 from pathlib import Path
 import logging
-from build_jamf_core.create_methods_for_class import MethodLogic
+from build_jamf_core.create_methods_for_get_class import MethodLogic
 
 
 class CreateClass:
