@@ -76,6 +76,20 @@ class MethodLogic:
 
         return base_url
 
+    def is_elongated_simple_search(self):
+        search_components = 0
+        if len(self.url_components()) == 5:
+            for component in self.url_components():
+                if "{" in component:
+                    search_components += 1
+
+        if search_components == 1:
+            base_url = True
+        else:
+            base_url = False
+
+        return base_url
+
     def is_complex_search_url(self):
         """
         Complex search means the url_components length is 5 and it needs 2 search parameters.
@@ -114,6 +128,18 @@ class MethodLogic:
 
         return text
 
+    def create_func_text_for_elongated_simple_search_url(self):
+        f_string_handler = 'f"{self.url}'
+        func_title = f"{self.url_components()[2]}_{self.url_components()[3]}"
+        search_paramater = self.url_components()[4].replace("{", "").replace("}", "")
+        url_extension = self.url.replace(f"/{self.url_components()[1]}", "")
+
+        text = f'    def by_{func_title}(self, {search_paramater}):\n' \
+            f'        self.url = {f_string_handler}{url_extension}"\n' \
+            f'        return self.get_jamf()\n\n'
+
+        return text
+
     def create_func_text_for_complex_search_url(self):
         f_string_handler = 'f"{self.url}'
         func_title = self.url_components()[2]
@@ -140,14 +166,14 @@ class MethodLogic:
         elif self.is_simple_search_url():
             func_text = self.create_func_text_for_simple_search_url()
 
-        elif self.is_complex_search_url():
+        elif self.is_elongated_simple_search():
+            func_text = self.create_func_text_for_elongated_simple_search_url()
             print(self.url)
+        elif self.is_complex_search_url():
             func_text = self.create_func_text_for_complex_search_url()
 
         elif len(self.url_components()) == 5:
-            # call it ellongated simple search
-            # print(self.url)
-            pass
+            input("fuck")
             # TODO add the text to this
         # elif len(self.separate_url_by_slash()) == 6:
         #     print(self.url)
