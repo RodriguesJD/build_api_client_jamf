@@ -8,8 +8,8 @@ authors = ["tank <jeremydrodrigues@gmail.com>"]
 python = "^3.7"
 selenium = "^3.141"
 bs4 = "^0.0.1"
-lxml = "^4.3"
 requests = "^2.22"
+lxml = "^4.4"
 
 
 [tool.poetry.dev-dependencies]

@@ -77,6 +77,10 @@ class MethodLogic:
         return base_url
 
     def is_elongated_simple_search(self):
+        """
+        Simple search means the url_components length is 5 and it has 1 search parameter.
+        :return:
+        """
         search_components = 0
         if len(self.url_components()) == 5:
             for component in self.url_components():
@@ -102,6 +106,60 @@ class MethodLogic:
                     search_components += 1
 
         if search_components == 2:
+            base_url = True
+        else:
+            base_url = False
+
+        return base_url
+
+    def is_elongated_complex_search_url(self):
+        """
+        Complex search means the url_components length is 6 and it needs 2 search parameters.
+        :return:
+        """
+        search_components = 0
+        if len(self.url_components()) == 6:
+            for component in self.url_components():
+                if "{" in component:
+                    search_components += 1
+
+        if search_components == 2:
+            base_url = True
+        else:
+            base_url = False
+
+        return base_url
+
+    def is_seven_complex_search_url(self):
+        """
+                Complex search means the url_components length is 7 and it needs 3 search parameters.
+                :return:
+                """
+        search_components = 0
+        if len(self.url_components()) == 7:
+            for component in self.url_components():
+                if "{" in component:
+                    search_components += 1
+
+        if search_components == 3:
+            base_url = True
+        else:
+            base_url = False
+
+        return base_url
+
+    def is_eight_complex_search_url(self):
+        """
+        Complex search means the url_components length is 8 and it needs 3 search parameters.
+        :return:
+        """
+        search_components = 0
+        if len(self.url_components()) == 8:
+            for component in self.url_components():
+                if "{" in component:
+                    search_components += 1
+
+        if search_components == 3:
             base_url = True
         else:
             base_url = False
@@ -144,17 +202,72 @@ class MethodLogic:
         f_string_handler = 'f"{self.url}'
         func_title = self.url_components()[2]
         func_title_extension = self.url_components()[4].replace("{", "").replace("}", "")
-
-        if func_title_extension != "start_date_end_date":
+        if func_title_extension != "start_date_end_date" and func_title_extension != 'interval':
+            print(self.url)
+            print(len(self.url_components()))
             raise Exception(f"There is an unaccounted var: {func_title_extension} ")
 
-        search_paramater = self.url_components()[3].replace("{", "").replace("}", "")
+        elif func_title == '{log}':
+            func_title = func_title.replace("{", "").replace("}", "")
+            search_paramater = func_title
+            second_search_param = self.url_components()[4].replace("{", "").replace("}", "")
+            url_extension = self.url.replace(f"/{self.url_components()[1]}", "")
+        else:
+            search_paramater = self.url_components()[3].replace("{", "").replace("}", "")
+            url_extension = self.url.replace(f"/{self.url_components()[1]}", "")
+            second_search_param = "start_date, end_date"
+
+        text = f'    def by_{func_title}_and_dates(self, {search_paramater}, {second_search_param}):\n' \
+            f'        self.url = {f_string_handler}{url_extension}"\n' \
+            f'        return self.get_jamf()\n\n'
+        return text
+
+    def create_func_text_for_elongated_complex_search_url(self):
+        f_string_handler = 'f"{self.url}'
+        func_title = f'{self.url_components()[3].replace("{", "").replace("}", "")}_' \
+            f'{self.url_components()[5].replace("{", "").replace("}", "")}'
+
+        search_paramater1 = self.url_components()[3].replace("{", "").replace("}", "")
+        search_paramater2 = self.url_components()[5].replace("{", "").replace("}", "")
         url_extension = self.url.replace(f"/{self.url_components()[1]}", "")
 
-        text = f'    def by_{func_title}_and_dates(self, {search_paramater}, start_date, end_date):\n' \
+        text = f'    def by_{func_title}(self, {search_paramater1}, {search_paramater2}):\n' \
             f'        self.url = {f_string_handler}{url_extension}"\n' \
             f'        return self.get_jamf()\n\n'
 
+        return text
+
+    def create_func_text_for_seven_complex_search_url(self):
+        if self.url != "/computerhardwaresoftwarereports/id/{id}/{start_date}_{end_date}/subset/{subset}":
+            raise Exception("create_func_text_for_seven_complex_search_url only accounts for computerhardwaresoftwarereports")
+        f_string_handler = 'f"{self.url}'
+        func_title = f'{self.url_components()[3].replace("{", "").replace("}", "")}_' \
+            f'{self.url_components()[5].replace("{", "").replace("}", "")}'
+
+        search_paramater1 = self.url_components()[3].replace("{", "").replace("}", "")
+        search_paramater2 = self.url_components()[4].replace("{", "").replace("}", "")
+        search_paramater3 = self.url_components()[6].replace("{", "").replace("}", "")
+        url_extension = self.url.replace(f"/{self.url_components()[1]}", "")
+
+        text = f'    def by_computerhardwaresoftwarereports_id_subset(self, {search_paramater1}, {search_paramater2}, {search_paramater3}):\n' \
+            f'        self.url = {f_string_handler}{url_extension}"\n' \
+            f'        return self.get_jamf()\n\n'
+
+        return text
+
+    def create_func_text_for_eight_complex_search_url(self):
+        f_string_handler = 'f"{self.url}'
+        func_title = f'{self.url_components()[3].replace("{", "").replace("}", "")}_' \
+            f'{self.url_components()[5].replace("{", "").replace("}", "")}_{self.url_components()[7].replace("{", "").replace("}", "")}'
+
+        search_paramater1 = self.url_components()[3].replace("{", "").replace("}", "")
+        search_paramater2 = self.url_components()[5].replace("{", "").replace("}", "")
+        search_paramater3 = self.url_components()[7].replace("{", "").replace("}", "")
+        url_extension = self.url.replace(f"/{self.url_components()[1]}", "")
+
+        text = f'    def by_(self, {search_paramater1}, {search_paramater2}, {search_paramater3}):\n' \
+            f'        self.url = {f_string_handler}{url_extension}"\n' \
+            f'        return self.get_jamf()\n\n'
         return text
 
     def main(self):
@@ -168,18 +281,25 @@ class MethodLogic:
 
         elif self.is_elongated_simple_search():
             func_text = self.create_func_text_for_elongated_simple_search_url()
-            print(self.url)
+
         elif self.is_complex_search_url():
             func_text = self.create_func_text_for_complex_search_url()
 
-        elif len(self.url_components()) == 5:
-            input("fuck")
-            # TODO add the text to this
-        # elif len(self.separate_url_by_slash()) == 6:
-        #     print(self.url)
-        else:
-            # print(len(self.separate_url_by_slash()))
-            pass
+        elif self.is_elongated_complex_search_url():
+            func_text = self.create_func_text_for_elongated_complex_search_url()
 
+        elif self.is_seven_complex_search_url():
+            func_text = self.create_func_text_for_seven_complex_search_url()
+
+        elif self.is_eight_complex_search_url():
+            func_text = self.create_func_text_for_eight_complex_search_url()
+
+        else:
+            # print(self.url)
+            # print(len(self.url_components()))
+            pass
+        if type(func_text) == bool:
+            print(func_text)
+            input()
         return func_text
 

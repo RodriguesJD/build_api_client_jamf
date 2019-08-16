@@ -50,60 +50,8 @@ class CreateClass:
     def bracket_remover(self, text_with_brackets):
         return text_with_brackets.replace("{", "").replace("}", "")
 
-    def attr_logic(self, url_data):
-        url = url_data[0]
-        rest_type = url_data[1]
-        split_url = url.split("/")
-        func_title = None
-        func_params = None
-        ext_url = None
-        word_before_bracket = None
-        if rest_type == 'get':
-            loop_count = 0
-            if "{" not in url:
-                func_title = f'_{split_url[len(split_url) -1]}'
-                func_params = ""
-                ext_url = "/subset/basic"  # TODO fix this its super hacky no logic just works cause theres only one
-            else:
-                for text in split_url:
-                    if loop_count <= 1:
-                        loop_count += 1  # skipping the base url
-                    elif loop_count == 2:
-                        ext_url = f'/{text}'
-                        word_before_bracket = text
-                        loop_count += 1
-                    else:
-                        if self.has_bracket(text):
-                            if text == "{start_date}_{end_date}":
-                                text = "{start_date_end_date}"
-
-                            if func_title:
-                                if self.bracket_remover(text) == self.bracket_remover(word_before_bracket):
-                                    func_title += f'_{self.bracket_remover(text)}'
-                                else:
-                                    func_title += f'_{self.bracket_remover(word_before_bracket)}'
-
-                            else:
-                                if self.bracket_remover(text) == self.bracket_remover(word_before_bracket):
-                                    func_title = f'_{self.bracket_remover(text)}'
-                                else:
-                                    func_title = f'_{self.bracket_remover(word_before_bracket)}'
-
-                            if func_params:
-                                func_params += f', {self.bracket_remover(text)}'
-                            else:
-                                func_params = f', {self.bracket_remover(text)}'
-
-                            ext_url += f'/{text}'
-
-                        else:
-                            ext_url += f'/{text}'
-                            word_before_bracket = text
-
-            self.create_text_for_attrs(func_title=func_title, func_params=func_params, ext_url=ext_url, url=url)
-
     def write_python_page(self, class_text):
-        with open(Path(f"core/get_jamf/{self.file_name}.py"), "w") as writefile:
+        with open(Path(f"base_core/core/get_jamf/{self.file_name}.py"), "w") as writefile:
             writefile.write(class_text)
 
     def main(self):
@@ -117,17 +65,11 @@ class CreateClass:
         for url_data in urls:
             url = url_data[0]
             rest_type = url_data[1]
-            MethodLogic(url, rest_type).main()
 
-
-            # if url_data[0] == url_extension_base:
-            #     if "{" in url_data[0]:  # this handles url structure that doesnt have a base url
-            #         self.attr_logic(url_data)
-            #     else:
-            #         # TODO i think we can use this to create a Computers().name_id_list()
-            #         pass
-            # else:
-            #     self.attr_logic(url_data)
+            if rest_type == 'get':
+                method_logic = MethodLogic(url, rest_type).main()
+                if method_logic:
+                    self.class_text += method_logic
 
         self.write_python_page(self.class_text)
 

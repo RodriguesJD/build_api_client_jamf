@@ -4,7 +4,7 @@ from pathlib import Path
 
 class HumanCorrections:
 
-    get_jamf_dir = Path("core/get_jamf")
+    get_jamf_dir = Path("base_core/core/get_jamf")
 
     def any_duplicate_functions(self, class_item):
         file = Path(f"{self.get_jamf_dir}/{class_item}")

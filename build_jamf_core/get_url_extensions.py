@@ -2,6 +2,7 @@ import time
 from selenium import webdriver
 from bs4 import BeautifulSoup
 import os
+from pathlib import Path
 
 
 jamf_prod_url = os.environ["JAMF_API_URL"]

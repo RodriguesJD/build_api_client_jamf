@@ -6,7 +6,7 @@ class CreateProjectStructure:
     """
     The build_jamf_api_client project needs dir and files before
     """
-    base_dir = "core"
+    base_dir = "base_core/core"
     tests_dir = f"{base_dir}/tests/"
     test_get_dir = f"{base_dir}/tests/get_jamf/"
     get_dir = f"{base_dir}/get_jamf/"
@@ -14,6 +14,11 @@ class CreateProjectStructure:
     init_file = "__init__.py"
 
     def create_base_dir(self):
+        if not os.path.isdir("base_core/"):
+            os.mkdir(Path("base_core/"))
+            open(Path(f"base_core/{self.init_file}"), 'a').close()
+        else:
+            pass
         if not os.path.isdir(Path(self.base_dir)):
             # print(f"Create {self.base_dir} directory")
             os.mkdir(Path(self.base_dir))
